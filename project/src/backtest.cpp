@@ -1,4 +1,6 @@
 #include <iostream>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include <vector>
 
 using namespace std;
@@ -32,4 +34,11 @@ double backtest(const vector<Trade> &trades, double initial_cash) {
     }
 
     return cash;
+}
+
+namespace py = pybind11;
+
+PYBIND11_MODULE(backtest, m) {
+    m.def("backtest", &backtest, "A function to run backtests",
+          py::arg("trades"), py::arg("initial_cash"));
 }
